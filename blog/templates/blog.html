@@ -1,0 +1,175 @@
+{% extends "layout.html" %}
+{% load static %}
+{% block main %}
+{% static 'images/professional-img.png' as blog_bg %}
+{% include 'includes/banner.html' with banner_title='Blog Page' banner_image=blog_bg banner_description='Here is Blog page' %}
+<!-- service section -->
+
+<section class="service_section layout_padding">  
+  <div class="container ">
+    <div class="heading_container heading_center">
+      <form action="{% url 'blog:search_blogs' %}" method="get">
+        {% csrf_token %}
+        <input type="text" name="q" placeholder="Search Blog">
+        <button type="submit">Search</button>
+    </form>
+    <br>
+    <br>
+      <h2> articles </h2>
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-2">
+          <h1>Authors</h1>
+          <ul>
+            {% for author in authors %}
+            <li><a href="?author={{author.user.username}}">{{author.user}}</a></li>
+            {% endfor %}
+          </ul>
+          <h2>Tags</h2>
+          <ol>
+            {% for tag in tags %}
+            <li>
+              <a href="?tag={{tag.title}}">{{tag}}</a> 
+            </li>
+            {% endfor %}
+          </ol>
+    </div>
+    <div class="row">
+      {% for article in articles %}
+
+      <div class="col-sm-6 col-md-4 mx-auto">
+        <a href="{% url 'blog:blog-detail' id=article.id %}">
+          <div class="box ">
+            <div class="img-box">
+              <img src="images/s1.png" alt="" />
+            </div>
+            <div class="detail-box">
+              <h5>
+                {{article.title}}
+              </h5>
+              <p>
+                {{article.description|truncatechars:200}}
+              </p>
+              <p class="post-meta"> Posted by <a href="?author={{author}}">{{article.author.user.username}}</a> {{article.created}}</p>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      {% endfor %}
+      <nav aria-label="...">
+        <ul class="pagination">
+          {% if page.has_previous %}
+          <li class="page-item">
+            <a href="?page={{page.previous_page_number}}" class="page-link">Previous</a>
+            {% else %}
+            <span class="page-link">Previous</span>
+          </li>
+            {% endif %}
+            {% for page_number in paginator.page_range %}
+          <li class="page-item {% if page_number == page.number %}active{% endif %}" aria-current="page">
+            <a class="page-link" href="?page={{page_number}}">{{page_number}}</a>
+          </li>
+            
+            {% endfor %}
+          {% if page.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{page.next_page_number}}">Next</a>
+          </li>
+          {% else %}
+          <li class="page-item disable">
+            <span class="page-link">next</span>
+          </li>
+          {% endif %}
+        </ul>
+      </nav>
+    </div>
+    <div class="btn-box">
+      <a href="{% url 'info:home' %}"> 
+        View More
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- end service section -->
+
+<!-- info section -->
+<section class="info_section ">
+  <div class="container">
+    <h4>
+      Get In Touch
+    </h4>
+    <div class="row">
+      <div class="col-lg-10 mx-auto">
+        <div class="info_items">
+          <div class="row">
+            <div class="col-md-4">
+              <a href="">
+                <div class="item ">
+                  <div class="img-box ">
+                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                  </div>
+                  <p>
+                    Lorem Ipsum is simply dummy text
+                  </p>
+                </div>
+              </a>
+            </div>
+            <div class="col-md-4">
+              <a href="">
+                <div class="item ">
+                  <div class="img-box ">
+                    <i class="fa fa-phone" aria-hidden="true"></i>
+                  </div>
+                  <p>
+                    +02 1234567890
+                  </p>
+                </div>
+              </a>
+            </div>
+            <div class="col-md-4">
+              <a href="">
+                <div class="item ">
+                  <div class="img-box">
+                    <i class="fa fa-envelope" aria-hidden="true"></i>
+                  </div>
+                  <p>
+                    demo@gmail.com
+                  </p>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="social-box">
+    <h4>
+      Follow Us
+    </h4>
+    <div class="box">
+      <a href="">
+        <i class="fa fa-facebook" aria-hidden="true"></i>
+      </a>
+      <a href="">
+        <i class="fa fa-twitter" aria-hidden="true"></i>
+      </a>
+      <a href="">
+        <i class="fa fa-youtube" aria-hidden="true"></i>
+      </a>
+      <a href="">
+        <i class="fa fa-instagram" aria-hidden="true"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- end info_section -->
+
+{% endblock main %}
+
+
+ 

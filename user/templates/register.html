@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% load static %}
+{% block main %}
+{% static 'images/logo.png' as register_bg %}
+{% include 'includes/banner.html' with banner_title='REGISTRATION' banner_image=register_bg banner_description='' %}
+<body>
+    <h2 class="text-center">Register Form</h2>
+    <div class="container">
+        <form class="text-center" method="POST">
+            {% csrf_token %}
+            {{form.as_div}}
+            <input type="submit">
+        </form>
+    </div>
+</body>
+
+{% endblock main %}

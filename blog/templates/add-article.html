@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+{% load static %}
+{% block main %}
+{% static 'images/professional-img.png' as blog_detail_bg %}
+{% include 'includes/banner.html' with banner_title='ADD ARTICLE PAGE' banner_image=blog_detail_bg banner_description='You can add article here' %}
+
+<div class="text-center">
+
+    <h1>ADD ARTICLE</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {{form.as_div}}
+        <input type="submit">
+    </form>
+
+</div>
+
+{% endblock main %}
